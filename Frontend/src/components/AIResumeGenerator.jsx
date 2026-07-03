@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
-import { Download, X, Sparkles, CheckCircle, RefreshCw, Upload, FileText, Target, AlertCircle, Check, Briefcase } from 'lucide-react'
+import { Download, X, Sparkles, CheckCircle, RefreshCw, Upload, FileText, Target, AlertCircle, Check, Briefcase, FileSearch } from 'lucide-react'
 import { jsPDF } from 'jspdf'
 import * as pdfjsLib from 'pdfjs-dist'
 import { portfolioData } from '../data/portfolioData'
