@@ -14,7 +14,7 @@ export default function About() {
 
   const downloadResume = () => {
     const link = document.createElement("a");
-    link.href = "/Bodlapati_Jeevan_Resume.pdf";
+    link.href = "/Bodlapati_Jeevan_AI_Engineer_Resume.pdf";
     link.download = "Bodlapati_Jeevan_AI_Engineer_Resume.pdf";
     document.body.appendChild(link);
     link.click();
