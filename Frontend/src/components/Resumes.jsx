@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
-import { Download, Eye, Bot, Zap, Code2, Globe, RefreshCw, Database, Cpu } from 'lucide-react'
+import { Download, Eye, Bot, Code2, Globe, RefreshCw, Cpu } from 'lucide-react'
 
 // ─── PDF helpers ────────────────────────────────────────────────────────────
 const previewResume = (file) => {
@@ -31,16 +31,6 @@ const resumesList = [
     file: 'Jeevan_Bodlapati_Resume_AIEngineer.pdf',
   },
   {
-    id: 'prompt-engineer',
-    title: 'Prompt Engineer',
-    description: 'Focused on ChatGPT, Claude, Gemini, Perplexity AI, prompt optimization, and AI agent workflows.',
-    color: '#f59e0b',
-    icon: <Zap size={24} />,
-    badge: 'ATS 94+',
-    bestFor: 'AI content & automation teams',
-    file: null,
-  },
-  {
     id: 'software-engineer',
     title: 'Software Engineer',
     description: 'Showcasing Python, Java, JavaScript, FastAPI, Node.js, and AI-assisted development with Copilot & Cursor.',
@@ -69,16 +59,6 @@ const resumesList = [
     badge: 'ATS 92+',
     bestFor: 'AI ops & automation-first companies',
     file: 'Jeevan_Bodlapati_Resume_AIAutomationEngineer.pdf',
-  },
-  {
-    id: 'data-engineer',
-    title: 'Data Engineer',
-    description: 'Covering data pipelines, Apache Spark, dbt, Airflow, BigQuery, and AI-powered analytics infrastructure.',
-    color: '#f43f5e',
-    icon: <Database size={24} />,
-    badge: 'ATS 91+',
-    bestFor: 'Data platforms & analytics teams',
-    file: null,
   },
 ]
 
@@ -251,29 +231,17 @@ export default function Resumes() {
           </h2>
           <div className="w-24 h-1 mx-auto mt-4 rounded-full" style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)' }} />
           <p className="section-subtitle mt-6 font-light">
-            Six role-specific resumes, each ATS-optimized and ready to preview or download instantly.
+            Four role-specific resumes, each ATS-optimized and ready to preview or download instantly.
           </p>
         </motion.div>
 
-        {/* 6-card grid: 2 + 2 + 2 */}
-        <div className="grid md:grid-cols-2 gap-6 mb-6 perspective-1000">
-          {resumesList.slice(0, 4).map((resume, i) => (
+        {/* 4-card grid: 2 + 2 */}
+        <div className="grid md:grid-cols-2 gap-6 perspective-1000">
+          {resumesList.map((resume, i) => (
             <HolographicResumeCard
               key={resume.id}
               {...resume}
               index={i}
-              inView={inView}
-            />
-          ))}
-        </div>
-
-        {/* Last 2 cards */}
-        <div className="grid md:grid-cols-2 gap-6 perspective-1000">
-          {resumesList.slice(4).map((resume, i) => (
-            <HolographicResumeCard
-              key={resume.id}
-              {...resume}
-              index={i + 4}
               inView={inView}
             />
           ))}
