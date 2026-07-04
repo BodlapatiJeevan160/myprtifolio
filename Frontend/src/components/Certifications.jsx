@@ -3,96 +3,9 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 import { Award, ExternalLink, CheckCircle2 } from 'lucide-react'
 
-const certifications = [
-  {
-    title: 'AWS Certified Machine Learning – Specialty',
-    issuer: 'Amazon Web Services',
-    date: 'Mar 2024',
-    icon: '☁️',
-    color: '#f59e0b',
-    credentialId: 'AWS-MLS-2024',
-    skills: ['SageMaker', 'ML Ops', 'Deep Learning', 'Data Engineering'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'Deep Learning Specialization',
-    issuer: 'deeplearning.ai / Coursera',
-    date: 'Nov 2023',
-    icon: '🧠',
-    color: '#6366f1',
-    credentialId: 'DL-SPEC-2023',
-    skills: ['Neural Networks', 'CNNs', 'RNNs', 'Transformers'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'LangChain for LLM Application Development',
-    issuer: 'deeplearning.ai',
-    date: 'Sep 2023',
-    icon: '⛓️',
-    color: '#a855f7',
-    credentialId: 'LC-LLM-2023',
-    skills: ['LangChain', 'RAG', 'Agents', 'Memory'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'Meta Front-End Developer Professional',
-    issuer: 'Meta / Coursera',
-    date: 'Jun 2023',
-    icon: '⚛️',
-    color: '#06b6d4',
-    credentialId: 'META-FE-2023',
-    skills: ['React', 'Advanced JS', 'UI/UX', 'Testing'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'OpenAI Prompt Engineering Certificate',
-    issuer: 'OpenAI',
-    date: 'Apr 2023',
-    icon: '✨',
-    color: '#ec4899',
-    credentialId: 'OAI-PE-2023',
-    skills: ['GPT-4', 'Chain-of-Thought', 'Few-shot', 'Fine-tuning'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'Google Cloud Professional Data Engineer',
-    issuer: 'Google Cloud',
-    date: 'Jan 2023',
-    icon: '🔵',
-    color: '#22c55e',
-    credentialId: 'GCP-DE-2023',
-    skills: ['BigQuery', 'Dataflow', 'Pub/Sub', 'Vertex AI'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'MongoDB Developer Certification',
-    issuer: 'MongoDB University',
-    date: 'Oct 2022',
-    icon: '🍃',
-    color: '#4ade80',
-    credentialId: 'MDB-DEV-2022',
-    skills: ['Aggregation', 'Atlas', 'Indexing', 'Atlas Search'],
-    verified: true,
-    link: '#',
-  },
-  {
-    title: 'Docker Certified Associate',
-    issuer: 'Docker Inc.',
-    date: 'Jul 2022',
-    icon: '🐳',
-    color: '#38bdf8',
-    credentialId: 'DCA-2022',
-    skills: ['Containers', 'Compose', 'Swarm', 'Security'],
-    verified: true,
-    link: '#',
-  },
-]
+import { portfolioData } from '../data/portfolioData'
+
+const certifications = portfolioData.certifications
 
 function CertCard({ cert, index, inView }) {
   const cardRef = useRef(null)

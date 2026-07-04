@@ -12,6 +12,15 @@ const highlights = [
 export default function About() {
   const [ref, inView] = useInView(0.2)
 
+  const downloadResume = () => {
+    const link = document.createElement("a");
+    link.href = "/Bodlapati_Jeevan_Resume.pdf";
+    link.download = "Bodlapati_Jeevan_AI_Engineer_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section id="about" ref={ref} className="relative py-32 px-6">
       <div className="max-w-6xl mx-auto">
@@ -113,13 +122,12 @@ export default function About() {
               >
                 <span className="relative z-10">Get In Touch</span>
               </button>
-              <a
-                href="#"
+              <button
+                onClick={downloadResume}
                 className="btn-outline text-sm px-6 py-3"
-                download
               >
                 Download CV
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>

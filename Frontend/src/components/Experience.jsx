@@ -3,71 +3,9 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 import { MapPin, Calendar, Briefcase } from 'lucide-react'
 
-const experiences = [
-  {
-    role: 'AI Engineer',
-    company: 'TechVision AI Labs',
-    location: 'Bangalore, India',
-    duration: 'Jan 2024 – Present',
-    type: 'Full-time',
-    color: '#6366f1',
-    icon: '🤖',
-    highlights: [
-      'Architected and deployed RAG-based document intelligence system serving 10K+ users',
-      'Engineered prompt pipelines reducing LLM costs by 40% while maintaining quality',
-      'Led integration of GPT-4o and Claude APIs into enterprise SaaS product',
-      'Built real-time AI chat infrastructure handling 50K+ daily messages',
-    ],
-    tags: ['LangChain', 'OpenAI', 'FastAPI', 'AWS', 'React'],
-  },
-  {
-    role: 'Full Stack Developer',
-    company: 'Innovate Digital Solutions',
-    location: 'Hyderabad, India',
-    duration: 'Jun 2022 – Dec 2023',
-    type: 'Full-time',
-    color: '#a855f7',
-    icon: '💻',
-    highlights: [
-      'Built and shipped 8+ full-stack web applications using React and Node.js',
-      'Reduced API response time by 60% through caching and query optimization',
-      'Mentored 3 junior developers on React best practices and code review',
-      'Integrated AI-powered features including smart search and recommendations',
-    ],
-    tags: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'TypeScript'],
-  },
-  {
-    role: 'Prompt Engineer & AI Consultant',
-    company: 'Freelance / Remote',
-    location: 'Remote',
-    duration: 'Jan 2022 – May 2022',
-    type: 'Freelance',
-    color: '#06b6d4',
-    icon: '✨',
-    highlights: [
-      'Consulted for 12+ clients on AI integration strategies and prompt design',
-      'Created comprehensive prompt templates for marketing, content, and coding tasks',
-      'Evaluated and benchmarked leading LLMs for client-specific use cases',
-      'Delivered AI automation workflows saving clients 15+ hours/week',
-    ],
-    tags: ['GPT-4', 'Claude', 'Prompt Design', 'Python', 'Automation'],
-  },
-  {
-    role: 'Frontend Developer Intern',
-    company: 'StartUp Hub',
-    location: 'Hyderabad, India',
-    duration: 'Jun 2021 – Dec 2021',
-    type: 'Internship',
-    color: '#ec4899',
-    icon: '🚀',
-    highlights: [
-      'Built responsive UI components using React and Tailwind CSS',
-      'Collaborated with design team to implement pixel-perfect interfaces',
-      'Improved page load performance by 35% through code splitting and lazy loading',
-    ],
-    tags: ['React', 'Tailwind CSS', 'JavaScript', 'Figma'],
-  },
-]
+import { portfolioData } from '../data/portfolioData'
+
+const experiences = portfolioData.experience
 
 function ExperienceCard({ exp, index }) {
   const [ref, inView] = useInView(0.2)

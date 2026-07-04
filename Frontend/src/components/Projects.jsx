@@ -4,97 +4,14 @@ import { useInView } from '../hooks/useInView'
 import { ExternalLink, Star, Zap } from 'lucide-react'
 import { FaGithub } from 'react-icons/fa'
 
-const projects = [
-  {
-    id: 1,
-    title: 'AI Chat Assistant',
-    description: 'A full-featured AI chatbot powered by GPT-4 with memory, context awareness, and multi-modal capabilities. Supports voice input, image analysis, and real-time streaming responses.',
-    tags: ['OpenAI', 'LangChain', 'React', 'FastAPI', 'PostgreSQL'],
-    category: 'AI / ML',
-    gradient: 'from-indigo-500 to-purple-600',
-    glowColor: '#6366f1',
-    icon: '🤖',
-    stars: 248,
-    featured: true,
-    demo: '#',
-    github: '#',
-  },
-  {
-    id: 2,
-    title: 'RAG Knowledge Base',
-    description: 'Enterprise-grade Retrieval-Augmented Generation system that indexes company documents and enables natural language queries. Deployed with vector search and semantic chunking.',
-    tags: ['Python', 'Pinecone', 'LlamaIndex', 'FastAPI', 'Docker'],
-    category: 'AI / ML',
-    gradient: 'from-purple-500 to-pink-600',
-    glowColor: '#a855f7',
-    icon: '📚',
-    stars: 182,
-    featured: true,
-    demo: '#',
-    github: '#',
-  },
-  {
-    id: 3,
-    title: 'Prompt Optimizer',
-    description: 'SaaS tool that analyzes and auto-optimizes prompts for various LLMs. Features A/B testing, analytics dashboard, and team collaboration for prompt management.',
-    tags: ['Next.js', 'TypeScript', 'OpenAI', 'Prisma', 'Stripe'],
-    category: 'Prompt Eng.',
-    gradient: 'from-cyan-500 to-blue-600',
-    glowColor: '#06b6d4',
-    icon: '✨',
-    stars: 135,
-    featured: true,
-    demo: '#',
-    github: '#',
-  },
-  {
-    id: 4,
-    title: 'Full Stack E-Commerce',
-    description: 'Modern e-commerce platform with AI-powered product recommendations, real-time inventory management, and seamless payment integration.',
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redis'],
-    category: 'Full Stack',
-    gradient: 'from-amber-500 to-orange-600',
-    glowColor: '#f59e0b',
-    icon: '🛒',
-    stars: 97,
-    featured: false,
-    demo: '#',
-    github: '#',
-  },
-  {
-    id: 5,
-    title: 'AI Image Generator',
-    description: 'Web app integrating Stable Diffusion and DALL-E APIs with custom style presets, batch generation, and gallery management features.',
-    tags: ['Python', 'Stable Diffusion', 'React', 'AWS S3'],
-    category: 'AI / ML',
-    gradient: 'from-pink-500 to-rose-600',
-    glowColor: '#ec4899',
-    icon: '🎨',
-    stars: 210,
-    featured: false,
-    demo: '#',
-    github: '#',
-  },
-  {
-    id: 6,
-    title: 'DevOps AI Pipeline',
-    description: 'Automated CI/CD pipeline with AI-driven code review, test generation, and deployment monitoring using natural language commands.',
-    tags: ['Python', 'Docker', 'GitHub Actions', 'AWS', 'FastAPI'],
-    category: 'Full Stack',
-    gradient: 'from-green-500 to-teal-600',
-    glowColor: '#10b981',
-    icon: '⚙️',
-    stars: 73,
-    featured: false,
-    demo: '#',
-    github: '#',
-  },
-]
+import { portfolioData } from '../data/portfolioData'
 
-const filters = ['All', 'AI / ML', 'Full Stack', 'Prompt Eng.']
+const projects = portfolioData.projects
+
+const filters = ['All', 'AI / ML / Automation', 'Data Engineering / AI', 'AI / Machine Learning', 'Full Stack / Social Impact', 'Full Stack', 'Freelance']
 
 function Project3DCard({ project, index, inView }) {
-  const { title, description, tags, category, gradient, glowColor, icon, stars, featured, demo, github } = project
+  const { title, description, tags, category, gradient, glowColor, icon, stars, featured, demo, github, impact } = project
   const cardRef = useRef(null)
 
   const x = useMotionValue(0)
@@ -182,7 +99,14 @@ function Project3DCard({ project, index, inView }) {
           <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-shadow-glow transition-all duration-300" style={{ '--tw-shadow-color': glowColor }}>
             {title}
           </h3>
-          <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 font-light">{description}</p>
+          <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 font-light">{description}</p>
+          
+          {impact && (
+            <div className="mb-6 p-3 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: glowColor }}>Key Impact</p>
+              <p className="text-sm text-gray-300 font-medium">{impact}</p>
+            </div>
+          )}
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-8 mt-auto">
