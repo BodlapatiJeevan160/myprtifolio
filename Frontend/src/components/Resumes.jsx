@@ -4,10 +4,12 @@ import { Download, Eye, Bot, Zap, Code2, Globe, RefreshCw, Database, Cpu } from 
 
 // ─── PDF helpers ────────────────────────────────────────────────────────────
 const previewResume = (file) => {
+  if (!file) return
   window.open(`/resumes/${file}`, '_blank')
 }
 
 const downloadResume = (file) => {
+  if (!file) return
   const link = document.createElement('a')
   link.href = `/resumes/${file}`
   link.download = file
@@ -26,7 +28,7 @@ const resumesList = [
     icon: <Bot size={24} />,
     badge: 'ATS 96+',
     bestFor: 'AI/ML product teams, research labs',
-    file: 'AI_Engineer_Resume.pdf',
+    file: 'Jeevan_Bodlapati_Resume_AIEngineer.pdf',
   },
   {
     id: 'prompt-engineer',
@@ -36,7 +38,7 @@ const resumesList = [
     icon: <Zap size={24} />,
     badge: 'ATS 94+',
     bestFor: 'AI content & automation teams',
-    file: 'Prompt_Engineer_Resume.pdf',
+    file: null,
   },
   {
     id: 'software-engineer',
@@ -46,7 +48,7 @@ const resumesList = [
     icon: <Code2 size={24} />,
     badge: 'ATS 93+',
     bestFor: 'Enterprise & product engineering',
-    file: 'Software_Engineer_Resume.pdf',
+    file: 'Jeevan_Bodlapati_Resume_SoftwareDeveloper.pdf',
   },
   {
     id: 'fullstack-developer',
@@ -56,7 +58,7 @@ const resumesList = [
     icon: <Globe size={24} />,
     badge: 'ATS 95+',
     bestFor: 'SaaS startups & web agencies',
-    file: 'FullStack_Developer_Resume.pdf',
+    file: 'Jeevan_Bodlapati_Resume_AIFullStackDeveloper.pdf',
   },
   {
     id: 'ai-automation',
@@ -66,7 +68,7 @@ const resumesList = [
     icon: <RefreshCw size={24} />,
     badge: 'ATS 92+',
     bestFor: 'AI ops & automation-first companies',
-    file: 'Automation_Engineer_Resume.pdf',
+    file: 'Jeevan_Bodlapati_Resume_AIAutomationEngineer.pdf',
   },
   {
     id: 'data-engineer',
@@ -76,7 +78,7 @@ const resumesList = [
     icon: <Database size={24} />,
     badge: 'ATS 91+',
     bestFor: 'Data platforms & analytics teams',
-    file: 'Data_Engineer_Resume.pdf',
+    file: null,
   },
 ]
 
@@ -145,47 +147,63 @@ function HolographicResumeCard({ title, description, color, icon, badge, bestFor
 
       {/* Action buttons */}
       <div className="flex gap-3" style={{ transform: 'translateZ(20px)' }}>
-        {/* Preview — opens PDF in new tab */}
+        {/* Preview — opens PDF in new tab, or disabled when no file */}
         <button
           onClick={() => previewResume(file)}
+          disabled={!file}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border"
-          style={{
+          style={file ? {
             borderColor: `${color}45`,
             color,
             background: 'transparent',
+          } : {
+            borderColor: 'rgba(255,255,255,0.08)',
+            color: '#6b7280',
+            background: 'transparent',
+            cursor: 'not-allowed',
           }}
           onMouseEnter={e => {
+            if (!file) return
             e.currentTarget.style.background = `${color}18`
             e.currentTarget.style.color = '#fff'
             e.currentTarget.style.boxShadow = `0 0 18px ${color}35`
           }}
           onMouseLeave={e => {
+            if (!file) return
             e.currentTarget.style.background = 'transparent'
             e.currentTarget.style.color = color
             e.currentTarget.style.boxShadow = 'none'
           }}
         >
-          <Eye size={15} /> Preview
+          <Eye size={15} /> {file ? 'Preview' : 'Coming Soon'}
         </button>
 
-        {/* Download — directly downloads PDF */}
+        {/* Download — directly downloads PDF, or disabled when no file */}
         <button
           onClick={() => downloadResume(file)}
+          disabled={!file}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold tracking-wide text-white transition-all duration-300"
-          style={{
+          style={file ? {
             background: `linear-gradient(135deg, ${color}dd, ${color}99)`,
             boxShadow: `0 4px 18px ${color}38`,
+          } : {
+            background: 'rgba(255,255,255,0.06)',
+            boxShadow: 'none',
+            color: '#6b7280',
+            cursor: 'not-allowed',
           }}
           onMouseEnter={e => {
+            if (!file) return
             e.currentTarget.style.boxShadow = `0 6px 28px ${color}55`
             e.currentTarget.style.transform = 'scale(1.03)'
           }}
           onMouseLeave={e => {
+            if (!file) return
             e.currentTarget.style.boxShadow = `0 4px 18px ${color}38`
             e.currentTarget.style.transform = 'scale(1)'
           }}
         >
-          <Download size={15} /> Download
+          <Download size={15} /> {file ? 'Download' : 'Coming Soon'}
         </button>
       </div>
     </motion.div>
