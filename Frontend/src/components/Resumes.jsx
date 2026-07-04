@@ -1,11 +1,22 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
-import { Download, Eye, Bot, Zap, Code2, Globe, RefreshCw } from 'lucide-react'
+import { Download, Eye, Bot, Zap, Code2, Globe, RefreshCw, Database, Cpu } from 'lucide-react'
 
-// Fires the custom event that AIResumeGenerator listens to — opens the modal
-const openResumeModal = () =>
-  window.dispatchEvent(new CustomEvent('open-resume-modal'))
+// ─── PDF helpers ────────────────────────────────────────────────────────────
+const previewResume = (file) => {
+  window.open(`/resumes/${file}`, '_blank')
+}
 
+const downloadResume = (file) => {
+  const link = document.createElement('a')
+  link.href = `/resumes/${file}`
+  link.download = file
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+// ─── Resume data ─────────────────────────────────────────────────────────────
 const resumesList = [
   {
     id: 'ai-engineer',
@@ -15,6 +26,7 @@ const resumesList = [
     icon: <Bot size={24} />,
     badge: 'ATS 96+',
     bestFor: 'AI/ML product teams, research labs',
+    file: 'AI_Engineer_Resume.pdf',
   },
   {
     id: 'prompt-engineer',
@@ -24,6 +36,7 @@ const resumesList = [
     icon: <Zap size={24} />,
     badge: 'ATS 94+',
     bestFor: 'AI content & automation teams',
+    file: 'Prompt_Engineer_Resume.pdf',
   },
   {
     id: 'software-engineer',
@@ -33,6 +46,7 @@ const resumesList = [
     icon: <Code2 size={24} />,
     badge: 'ATS 93+',
     bestFor: 'Enterprise & product engineering',
+    file: 'Software_Engineer_Resume.pdf',
   },
   {
     id: 'fullstack-developer',
@@ -42,19 +56,32 @@ const resumesList = [
     icon: <Globe size={24} />,
     badge: 'ATS 95+',
     bestFor: 'SaaS startups & web agencies',
+    file: 'FullStack_Developer_Resume.pdf',
   },
   {
     id: 'ai-automation',
-    title: 'AI Automation Engineer',
+    title: 'Automation Engineer',
     description: 'Specializing in AI agents, LangChain orchestration, LlamaIndex, RAG, and intelligent workflow automation.',
     color: '#10b981',
     icon: <RefreshCw size={24} />,
     badge: 'ATS 92+',
     bestFor: 'AI ops & automation-first companies',
+    file: 'Automation_Engineer_Resume.pdf',
+  },
+  {
+    id: 'data-engineer',
+    title: 'Data Engineer',
+    description: 'Covering data pipelines, Apache Spark, dbt, Airflow, BigQuery, and AI-powered analytics infrastructure.',
+    color: '#f43f5e',
+    icon: <Database size={24} />,
+    badge: 'ATS 91+',
+    bestFor: 'Data platforms & analytics teams',
+    file: 'Data_Engineer_Resume.pdf',
   },
 ]
 
-function HolographicResumeCard({ title, description, color, icon, badge, bestFor, index, inView }) {
+// ─── Card component ──────────────────────────────────────────────────────────
+function HolographicResumeCard({ title, description, color, icon, badge, bestFor, file, index, inView }) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 
@@ -118,9 +145,9 @@ function HolographicResumeCard({ title, description, color, icon, badge, bestFor
 
       {/* Action buttons */}
       <div className="flex gap-3" style={{ transform: 'translateZ(20px)' }}>
-        {/* Preview — opens modal so user can pick & preview */}
+        {/* Preview — opens PDF in new tab */}
         <button
-          onClick={openResumeModal}
+          onClick={() => previewResume(file)}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border"
           style={{
             borderColor: `${color}45`,
@@ -141,9 +168,9 @@ function HolographicResumeCard({ title, description, color, icon, badge, bestFor
           <Eye size={15} /> Preview
         </button>
 
-        {/* Download — opens modal directly */}
+        {/* Download — directly downloads PDF */}
         <button
-          onClick={openResumeModal}
+          onClick={() => downloadResume(file)}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold tracking-wide text-white transition-all duration-300"
           style={{
             background: `linear-gradient(135deg, ${color}dd, ${color}99)`,
@@ -165,8 +192,12 @@ function HolographicResumeCard({ title, description, color, icon, badge, bestFor
   )
 }
 
+// ─── Section ─────────────────────────────────────────────────────────────────
 export default function Resumes() {
   const [ref, inView] = useInView(0.1)
+
+  const scrollToGenerator = () =>
+    document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <section
@@ -202,11 +233,11 @@ export default function Resumes() {
           </h2>
           <div className="w-24 h-1 mx-auto mt-4 rounded-full" style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)' }} />
           <p className="section-subtitle mt-6 font-light">
-            Five role-specific resumes, each ATS-optimized and instantly generated in your browser. Click any card to download.
+            Six role-specific resumes, each ATS-optimized and ready to preview or download instantly.
           </p>
         </motion.div>
 
-        {/* 5-card grid: 2 + 2 + 1 centered */}
+        {/* 6-card grid: 2 + 2 + 2 */}
         <div className="grid md:grid-cols-2 gap-6 mb-6 perspective-1000">
           {resumesList.slice(0, 4).map((resume, i) => (
             <HolographicResumeCard
@@ -218,16 +249,19 @@ export default function Resumes() {
           ))}
         </div>
 
-        {/* 5th card centered */}
-        <div className="max-w-sm mx-auto perspective-1000">
-          <HolographicResumeCard
-            {...resumesList[4]}
-            index={4}
-            inView={inView}
-          />
+        {/* Last 2 cards */}
+        <div className="grid md:grid-cols-2 gap-6 perspective-1000">
+          {resumesList.slice(4).map((resume, i) => (
+            <HolographicResumeCard
+              key={resume.id}
+              {...resume}
+              index={i + 4}
+              inView={inView}
+            />
+          ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA — scrolls to AI Generator section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -235,17 +269,17 @@ export default function Resumes() {
           className="mt-14 text-center"
         >
           <button
-            onClick={openResumeModal}
+            onClick={scrollToGenerator}
             className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl active:scale-95"
             style={{
               background: 'linear-gradient(135deg, #6366f1, #a855f7)',
               boxShadow: '0 0 40px rgba(99,102,241,0.4)',
             }}
           >
-            <Download size={20} />
-            Download Any Resume Instantly
+            <Cpu size={20} />
+            Generate a Custom AI Resume
           </button>
-          <p className="text-xs text-gray-600 mt-3 font-mono">No API · No Internet Required · Generated Locally</p>
+          <p className="text-xs text-gray-600 mt-3 font-mono">Tailored to any job description · Powered by AI</p>
         </motion.div>
       </div>
     </section>
