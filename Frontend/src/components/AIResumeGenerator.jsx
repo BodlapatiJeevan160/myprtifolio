@@ -180,7 +180,7 @@ function generateRolePDF(role, analysisResult) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const W   = doc.internal.pageSize.getWidth()
   const H   = doc.internal.pageSize.getHeight()
-  const M   = 18          // margin
+  const M   = 12          // margin
   const CW  = W - M * 2   // content width
   let y = M
 
@@ -203,17 +203,15 @@ function generateRolePDF(role, analysisResult) {
   }
 
   function sectionHeader(label) {
-    checkPage(16)
+    checkPage(12)
     y += 4
-    setFC(accent)
-    doc.roundedRect(M, y, 3.5, 7.5, 1, 1, 'F')
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(9.5)
+    doc.setFontSize(11)
     setTC(accent)
-    doc.text(label.toUpperCase(), M + 6.5, y + 5.8)
-    y += 12
+    doc.text(label.toUpperCase(), M, y + 5)
+    y += 8
     setDC(DIVIDER)
-    doc.setLineWidth(0.25)
+    doc.setLineWidth(0.5)
     doc.line(M, y - 2, W - M, y - 2)
     y += 2
     setTC(TEXT)
@@ -224,44 +222,43 @@ function generateRolePDF(role, analysisResult) {
     const lines = doc.splitTextToSize(text, maxW)
     checkPage(lines.length * 4.6 + 1.5)
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8.5)
-    setTC(accent)
-    doc.text('▸', M + indent - 3.5, y + 3.5)
+    doc.setFontSize(9)
     setTC(TEXT)
+    doc.text('•', M + indent - 3.5, y + 3.5)
     doc.text(lines, M + indent + 1, y + 3.5)
     y += lines.length * 4.6 + 0.5
   }
 
   function tagLine(tags) {
     if (!tags?.length) return
-    checkPage(7)
-    doc.setFontSize(7.5)
+    checkPage(6)
+    doc.setFontSize(8.5)
     doc.setFont('helvetica', 'italic')
     setTC(MUTED)
-    doc.text('◆ ' + tags.slice(0, 7).join('  ·  '), M + 5, y + 3)
-    y += 6.5
+    doc.text(`Technologies: ${tags.join(' | ')}`, M + 5, y + 3)
+    y += 5
   }
 
   // ── HEADER ──
   setFC(HEADERBG)
-  doc.rect(0, 0, W, 44, 'F')
+  doc.rect(0, 0, W, 36, 'F')
   setFC(accent)
-  doc.rect(0, 0, 5, 44, 'F')
+  doc.rect(0, 0, 5, 36, 'F')
   setFC(accent)
-  doc.rect(0, 43.2, W, 0.8, 'F')
+  doc.rect(0, 35.2, W, 0.8, 'F')
 
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(23)
+  doc.setFontSize(22)
   setTC(WHITE)
-  doc.text(portfolioData.personalInfo.name, M + 5, 17)
+  doc.text(portfolioData.personalInfo.name, M + 5, 14)
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(10)
   setTC(accent)
-  doc.text(`${role.title}  ·  ${role.subtitle}`, M + 5, 25.5)
+  doc.text(`${role.title} | ${role.subtitle.replace(/ · /g, ' | ')}`, M + 5, 21)
 
-  doc.setFontSize(7.8)
-  doc.setTextColor(175, 180, 210)
+  doc.setFontSize(8.5)
+  doc.setTextColor(200, 200, 200)
   const contactParts = [
     portfolioData.personalInfo.email,
     portfolioData.personalInfo.phone,
@@ -269,9 +266,9 @@ function generateRolePDF(role, analysisResult) {
     portfolioData.personalInfo.github,
     portfolioData.personalInfo.location,
   ].filter(Boolean)
-  doc.text(doc.splitTextToSize(contactParts.join('   |   '), CW - 10)[0], M + 5, 34.5)
+  doc.text(doc.splitTextToSize(contactParts.join(' | '), CW - 10)[0], M + 5, 28)
 
-  y = 52
+  y = 42
   setTC(TEXT)
 
   // ── SUMMARY ──
@@ -291,14 +288,14 @@ function generateRolePDF(role, analysisResult) {
   const matchedSet = new Set((analysisResult?.matched || []).map(s => s.toLowerCase()))
 
   for (const sec of role.skillSections) {
-    checkPage(10)
+    checkPage(6)
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(8)
-    setTC(accent)
+    doc.setFontSize(9)
+    setTC(TEXT)
     doc.text(sec.label + ':', M, y + 4)
     
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8)
+    doc.setFontSize(9)
     setTC(TEXT)
     
     let sortedSkills = [...sec.skills]
@@ -310,38 +307,38 @@ function generateRolePDF(role, analysisResult) {
       })
     }
 
-    const skillStr = sortedSkills.join('  ·  ')
+    const skillStr = sortedSkills.join(' | ')
     const skillLines = doc.splitTextToSize(skillStr, CW - 42)
     doc.text(skillLines, M + 42, y + 4)
-    y += skillLines.length * 4.5 + 2
+    y += skillLines.length * 4.5 + 1
   }
-  y += 4
+  y += 3
 
   // ── EXPERIENCE ──
   sectionHeader('Professional Experience')
   for (const exp of portfolioData.experience) {
-    checkPage(26)
+    checkPage(20)
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(10.5)
     setTC(TEXT)
     doc.text(exp.role, M, y)
     
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8)
+    doc.setFontSize(9)
     setTC(MUTED)
     doc.text(exp.duration, W - M, y, { align: 'right' })
-    y += 5.5
+    y += 5
     
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(8.5)
+    doc.setFontSize(9.5)
     setTC(accent)
     doc.text(exp.company, M, y)
     
     doc.setFont('helvetica', 'normal')
     setTC(MUTED)
-    const meta = `  ·  ${exp.location}  ·  ${exp.type}`
+    const meta = ` | ${exp.location} | ${exp.type}`
     doc.text(meta, M + doc.getTextWidth(exp.company), y)
-    y += 5.5
+    y += 5
     
     setTC(TEXT)
     for (const h of exp.highlights) bullet(h, 5)
@@ -357,58 +354,66 @@ function generateRolePDF(role, analysisResult) {
     .slice(0, 3)
 
   for (const proj of roleProjects) {
-    checkPage(22)
+    checkPage(18)
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(10)
+    doc.setFontSize(10.5)
     setTC(TEXT)
-    doc.text(proj.title, M, y)
+    doc.text(proj.title.toUpperCase(), M, y)
     
-    doc.setFont('helvetica', 'italic')
-    doc.setFontSize(7.5)
-    setTC(MUTED)
-    doc.text(proj.category, W - M, y, { align: 'right' })
-    y += 5.5
+    y += 5
     
-    bullet(proj.description, 5)
-    tagLine(proj.tags)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(9)
+    setTC(TEXT)
+    const descLines = doc.splitTextToSize(proj.description, CW)
+    doc.text(descLines, M, y)
+    y += descLines.length * 4.5 + 1
+    
+    if (proj.tags && proj.tags.length > 0) {
+      doc.setFont('helvetica', 'italic')
+      doc.setFontSize(9)
+      setTC(MUTED)
+      doc.text(`Technologies: ${proj.tags.join(' | ')}`, M, y)
+      y += 5
+    }
     y += 2
   }
 
   // ── CERTIFICATIONS ──
   sectionHeader('Certifications')
   for (const cert of portfolioData.certifications.slice(0, 4)) {
-    checkPage(8)
+    checkPage(10)
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(8.5)
+    doc.setFontSize(10)
     setTC(TEXT)
-    doc.text('▸ ' + cert.title, M, y + 4)
+    doc.text(cert.title.toUpperCase(), M, y + 4)
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(7.5)
+    doc.setFontSize(9)
     setTC(MUTED)
-    doc.text(`${cert.issuer}  ·  Credential: ${cert.credentialId}`, M + 4, y + 8.5)
-    y += 10
+    doc.text(`${cert.issuer} | Credential: ${cert.credentialId}`, M, y + 8.5)
+    y += 11
   }
 
   // ── EDUCATION ──
   sectionHeader('Education')
   for (const edu of portfolioData.education) {
-    checkPage(16)
+    checkPage(12)
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(10.5)
     setTC(TEXT)
     doc.text(edu.degree, M, y)
     
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8)
+    doc.setFontSize(9)
     setTC(MUTED)
-    doc.text(`${edu.year}  ·  ${edu.grade}`, W - M, y, { align: 'right' })
-    y += 5.5
+    doc.text(`${edu.year} | ${edu.grade}`, W - M, y, { align: 'right' })
+    y += 5
     
     doc.setFont('helvetica', 'italic')
-    doc.setFontSize(8.5)
+    doc.setFontSize(9.5)
     setTC(accent)
-    doc.text(`${edu.institution}  —  ${edu.location}`, M, y)
-    y += 10
+    doc.text(`${edu.institution} - ${edu.location}`, M, y)
+    y += 8
   }
 
   // ── FOOTER ──
@@ -417,13 +422,13 @@ function generateRolePDF(role, analysisResult) {
     doc.setPage(p)
     setDC(accent)
     doc.setLineWidth(0.4)
-    doc.line(M, H - 12, W - M, H - 12)
-    doc.setFontSize(7)
+    doc.line(M, H - 10, W - M, H - 10)
+    doc.setFontSize(8)
     setTC(MUTED)
     const atsText = analysisResult ? `ATS Match Score: ${analysisResult.score}%` : `Target Role: ${role.title}`
     doc.text(
-      `${portfolioData.personalInfo.name}  ·  ${atsText}  ·  Page ${p} of ${totalPages}`,
-      W / 2, H - 6.5, { align: 'center' }
+      `${portfolioData.personalInfo.name} | ${atsText} | Page ${p} of ${totalPages}`,
+      W / 2, H - 5, { align: 'center' }
     )
   }
 
