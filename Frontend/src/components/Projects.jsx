@@ -119,20 +119,41 @@ function Project3DCard({ project, index, inView }) {
 
           {/* Actions */}
           <div className="flex flex-wrap gap-3 w-full">
-            <a
-              href={demo}
-              className="flex-1 flex justify-center items-center gap-2 text-xs font-bold px-4 md:px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-105 group/btn"
-              style={{ background: `${glowColor}30`, border: `1px solid ${glowColor}60`, color: '#fff', boxShadow: `0 0 15px ${glowColor}40` }}
+            {/* Initialize — opens live demo in new tab, or shows Coming Soon */}
+            <button
+              onClick={() => {
+                if (demo) window.open(demo, '_blank', 'noopener,noreferrer')
+              }}
+              disabled={!demo}
+              className="flex-1 flex justify-center items-center gap-2 text-xs font-bold px-4 md:px-5 py-2.5 rounded-full transition-all duration-300 group/btn"
+              style={demo ? {
+                background: `${glowColor}30`,
+                border: `1px solid ${glowColor}60`,
+                color: '#fff',
+                boxShadow: `0 0 15px ${glowColor}40`,
+              } : {
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                color: '#6b7280',
+                cursor: 'not-allowed',
+              }}
+              onMouseEnter={e => { if (demo) e.currentTarget.style.transform = 'scale(1.05)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
             >
-              <ExternalLink size={14} className="group-hover/btn:rotate-45 transition-transform" /> Initialize
-            </a>
-            <a
-              href={github}
+              <ExternalLink size={14} className={demo ? 'group-hover/btn:rotate-45 transition-transform' : ''} />
+              {demo ? 'Initialize' : 'Coming Soon'}
+            </button>
+
+            {/* Source — opens GitHub in new tab */}
+            <button
+              onClick={() => {
+                if (github && github !== '#') window.open(github, '_blank', 'noopener,noreferrer')
+              }}
               className="flex-1 flex justify-center items-center gap-2 text-xs font-bold px-4 md:px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-105 hover:bg-white/10"
               style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#d1d5db' }}
             >
               <FaGithub size={14} /> Source
-            </a>
+            </button>
           </div>
         </div>
       </div>
