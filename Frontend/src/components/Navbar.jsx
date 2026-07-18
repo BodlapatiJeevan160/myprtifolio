@@ -7,6 +7,7 @@ const links = [
   { id: 'skills',         label: 'Skills' },
   { id: 'projects',       label: 'Projects' },
   { id: 'experience',     label: 'Experience' },
+  { id: 'recruiter',      label: 'Highlights' },
   { id: 'certifications', label: 'Certifications' },
   { id: 'resumes',        label: 'Resumes' },
   { id: 'generator',      label: 'AI Generator' },

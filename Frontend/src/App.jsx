@@ -1,16 +1,26 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense, lazy } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import About from './components/About'
-import Skills from './components/Skills'
-import Projects from './components/Projects'
-import Experience from './components/Experience'
-import Certifications from './components/Certifications'
-import Resumes from './components/Resumes'
-import AIResumeGenerator from './components/AIResumeGenerator'
-import Contact from './components/Contact'
 import Footer from './components/Footer'
 import GlobalBackground from './components/GlobalBackground'
+
+// Lazy loaded components to reduce initial bundle size (Performance Optimization)
+const About = lazy(() => import('./components/About'))
+const Skills = lazy(() => import('./components/Skills'))
+const Projects = lazy(() => import('./components/Projects'))
+const Experience = lazy(() => import('./components/Experience'))
+const RecruiterHighlights = lazy(() => import('./components/RecruiterHighlights'))
+const Certifications = lazy(() => import('./components/Certifications'))
+const Resumes = lazy(() => import('./components/Resumes'))
+const AIResumeGenerator = lazy(() => import('./components/AIResumeGenerator'))
+const Contact = lazy(() => import('./components/Contact'))
+
+// Loading fallback component
+const Loader = () => (
+  <div className="flex items-center justify-center min-h-[50vh] text-cyan-400 opacity-50">
+    <div className="w-8 h-8 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin" />
+  </div>
+)
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -45,7 +55,7 @@ function App() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
-      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'certifications', 'resumes', 'generator', 'contact']
+      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'recruiter', 'certifications', 'resumes', 'generator', 'contact']
       const scrollPos = window.scrollY + 100
 
       for (const section of sections) {
@@ -111,33 +121,38 @@ function App() {
       <div className={`noise relative min-h-screen bg-dark-900 text-white overflow-x-hidden transition-all duration-1000 ease-in-out ${introState === 'finished' || fadeIntro ? 'opacity-100 blur-none' : 'opacity-0 blur-lg h-screen overflow-hidden'}`}>
         {/* Global ambient background */}
         <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 -left-40 w-96 h-96 rounded-full opacity-10 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
-        <div className="absolute top-3/4 -right-40 w-96 h-96 rounded-full opacity-10 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #a855f7, transparent)' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #06b6d4, transparent)' }} />
-      </div>
+          <div className="absolute top-1/4 -left-40 w-96 h-96 rounded-full opacity-10 blur-3xl"
+            style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
+          <div className="absolute top-3/4 -right-40 w-96 h-96 rounded-full opacity-10 blur-3xl"
+            style={{ background: 'radial-gradient(circle, #a855f7, transparent)' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5 blur-3xl"
+            style={{ background: 'radial-gradient(circle, #06b6d4, transparent)' }} />
+        </div>
 
-      <GlobalBackground />
+        <GlobalBackground />
       
-      <div className={`transition-opacity duration-1000 delay-700 ${introState === 'finished' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <Navbar activeSection={activeSection} scrolled={scrolled} />
-      </div>
+        <div className={`transition-opacity duration-1000 delay-700 ${introState === 'finished' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <Navbar activeSection={activeSection} scrolled={scrolled} />
+        </div>
 
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Certifications />
-        <Resumes />
-        <AIResumeGenerator />
-        <Contact />
-      </main>
+        <main>
+          {/* Eagerly load Hero as it is critical above-the-fold content */}
+          <Hero />
+          
+          <Suspense fallback={<Loader />}>
+            <About />
+            <Skills />
+            <Projects />
+            <Experience />
+            <RecruiterHighlights />
+            <Certifications />
+            <Resumes />
+            <AIResumeGenerator />
+            <Contact />
+          </Suspense>
+        </main>
 
-      <Footer />
+        <Footer />
       </div>
     </>
   )
