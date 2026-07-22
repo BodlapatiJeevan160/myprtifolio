@@ -42,12 +42,12 @@ export default function Footer() {
 
             <div className="flex gap-4 mt-8">
               {[
-                { icon: FaGithub,     href: '#', color: '#fff', shadow: '#ffffff' },
-                { icon: FaLinkedinIn, href: '#', color: '#0ea5e9', shadow: '#0ea5e9' },
-                { icon: FaTwitter,    href: '#', color: '#38bdf8', shadow: '#38bdf8' },
-                { icon: Mail,         href: 'mailto:jeevan@example.com', color: '#ec4899', shadow: '#ec4899' },
-              ].map(({ icon: Icon, href, color, shadow }, i) => (
-                <a key={i} href={href}
+                { icon: FaGithub,     href: '#', label: 'GitHub', color: '#fff', shadow: '#ffffff' },
+                { icon: FaLinkedinIn, href: '#', label: 'LinkedIn', color: '#0ea5e9', shadow: '#0ea5e9' },
+                { icon: FaTwitter,    href: '#', label: 'Twitter', color: '#38bdf8', shadow: '#38bdf8' },
+                { icon: Mail,         href: 'mailto:jeevan@example.com', label: 'Email', color: '#ec4899', shadow: '#ec4899' },
+              ].map(({ icon: Icon, href, label, color, shadow }, i) => (
+                <a key={i} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                   className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group glass-card"
                   onMouseEnter={e => { e.currentTarget.style.borderColor = `${color}80`; e.currentTarget.style.boxShadow = `0 0 20px ${shadow}60, inset 0 0 10px ${shadow}30` }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.5)' }}

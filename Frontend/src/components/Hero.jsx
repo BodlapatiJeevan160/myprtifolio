@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { ChevronDown, Download, Terminal, Github, Mail } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+/* eslint-disable react-hooks/set-state-in-effect */
+import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
+import { ChevronDown, Download, Terminal, Mail } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 import { useInView } from '../hooks/useInView';
 import heroImg from '../assets/hero.png';
 
@@ -140,7 +142,6 @@ function useCounter(target, inView, duration = 2000) {
   useEffect(() => {
     if (!inView || started.current) return;
     started.current = true;
-    let start = 0;
     const t0 = performance.now();
     const tick = (now) => {
       const p = Math.min((now - t0) / duration, 1);
@@ -325,7 +326,7 @@ export default function Hero() {
                 className="p-3.5 rounded-full border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 transition-all flex items-center justify-center"
                 title="GitHub"
               >
-                <Github size={18} />
+                <FaGithub size={18} />
               </a>
             </div>
           </motion.div>

@@ -245,7 +245,7 @@ export default function Projects() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="text-center mt-16"
         >
-          <a href="#" className="btn-outline glass-card text-sm px-8 py-4 inline-flex items-center gap-3 tracking-[0.2em] font-mono uppercase">
+          <a href="https://github.com/BodlapatiJeevan160" target="_blank" rel="noopener noreferrer" className="btn-outline glass-card text-sm px-8 py-4 inline-flex items-center gap-3 tracking-[0.2em] font-mono uppercase">
             <FaGithub size={18} /> Access Full Repository
           </a>
         </motion.div>

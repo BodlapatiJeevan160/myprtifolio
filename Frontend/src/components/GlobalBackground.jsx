@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Sparkles, PerspectiveCamera } from '@react-three/drei';

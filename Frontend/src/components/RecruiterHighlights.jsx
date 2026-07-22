@@ -168,7 +168,7 @@ const CARDS = [
    CARD INNER CONTENT VARIANTS
 ═══════════════════════════════════════════════════════════════ */
 
-function EducationContent({ color, inView }) {
+function EducationContent({ color }) {
   return (
     <div className="flex flex-col gap-3 mt-auto">
       <div>

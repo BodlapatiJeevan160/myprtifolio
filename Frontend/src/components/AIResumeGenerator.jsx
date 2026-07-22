@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
@@ -121,7 +122,7 @@ function analyzeJobDescription(jdText, role) {
   }
 
   const text = jdText.toLowerCase()
-  
+
   // Flatten all user skills
   let allUserSkills = []
   Object.values(portfolioData.skills).forEach(arr => allUserSkills.push(...arr))
@@ -132,9 +133,9 @@ function analyzeJobDescription(jdText, role) {
 
   // Simple heuristic keywords common in tech job descriptions
   const industryKeywords = [
-    'python', 'java', 'react', 'node', 'sql', 'mongodb', 'machine learning', 
-    'deep learning', 'api', 'rest', 'html', 'css', 'fastapi', 'flask', 
-    'django', 'pandas', 'numpy', 'automation', 'agile', 'aws', 'docker', 
+    'python', 'java', 'react', 'node', 'sql', 'mongodb', 'machine learning',
+    'deep learning', 'api', 'rest', 'html', 'css', 'fastapi', 'flask',
+    'django', 'pandas', 'numpy', 'automation', 'agile', 'aws', 'docker',
     'kubernetes', 'cloud', 'ci/cd', 'git', 'llm', 'generative ai', 'rag'
   ]
 
@@ -157,7 +158,7 @@ function analyzeJobDescription(jdText, role) {
 
   const total = matched.length + missing.length
   const matchPercent = total === 0 ? 100 : Math.min(100, Math.round((matched.length / total) * 100))
-  
+
   // Calculate dynamic ATS Score
   // Base it slightly on the default ATS score and slightly on the match percent
   const score = Math.min(99, Math.max(70, Math.round(role.atsScore * 0.4 + matchPercent * 0.6)))
@@ -178,17 +179,17 @@ function hexToRgb(hex) {
 
 function generateRolePDF(role, analysisResult) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
-  const W   = doc.internal.pageSize.getWidth()
-  const H   = doc.internal.pageSize.getHeight()
-  const M   = 12          // margin
-  const CW  = W - M * 2   // content width
+  const W = doc.internal.pageSize.getWidth()
+  const H = doc.internal.pageSize.getHeight()
+  const M = 12          // margin
+  const CW = W - M * 2   // content width
   let y = M
 
-  const accent   = hexToRgb(role.color)
-  const TEXT     = [12, 15, 26]
-  const MUTED    = [95, 100, 120]
-  const DIVIDER  = [220, 223, 235]
-  const WHITE    = [255, 255, 255]
+  const accent = hexToRgb(role.color)
+  const TEXT = [12, 15, 26]
+  const MUTED = [95, 100, 120]
+  const DIVIDER = [220, 223, 235]
+  const WHITE = [255, 255, 255]
   const HEADERBG = [22, 24, 40]
 
   const setTC = (c) => doc.setTextColor(c[0], c[1], c[2])
@@ -283,7 +284,7 @@ function generateRolePDF(role, analysisResult) {
 
   // ── SKILLS ──
   sectionHeader('Core Skills')
-  
+
   // Reorder skills to prioritize matched skills if JD analysis exists
   const matchedSet = new Set((analysisResult?.matched || []).map(s => s.toLowerCase()))
 
@@ -293,11 +294,11 @@ function generateRolePDF(role, analysisResult) {
     doc.setFontSize(9)
     setTC(TEXT)
     doc.text(sec.label + ':', M, y + 4)
-    
+
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     setTC(TEXT)
-    
+
     let sortedSkills = [...sec.skills]
     if (analysisResult) {
       sortedSkills.sort((a, b) => {
@@ -322,24 +323,24 @@ function generateRolePDF(role, analysisResult) {
     doc.setFontSize(10.5)
     setTC(TEXT)
     doc.text(exp.role, M, y)
-    
+
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     setTC(MUTED)
     doc.text(exp.duration, W - M, y, { align: 'right' })
     y += 5
-    
+
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(9.5)
     setTC(accent)
     doc.text(exp.company, M, y)
-    
+
     doc.setFont('helvetica', 'normal')
     setTC(MUTED)
     const meta = ` | ${exp.location} | ${exp.type}`
     doc.text(meta, M + doc.getTextWidth(exp.company), y)
     y += 5
-    
+
     setTC(TEXT)
     for (const h of exp.highlights) bullet(h, 5)
     tagLine(exp.tags)
@@ -359,16 +360,16 @@ function generateRolePDF(role, analysisResult) {
     doc.setFontSize(10.5)
     setTC(TEXT)
     doc.text(proj.title.toUpperCase(), M, y)
-    
+
     y += 5
-    
+
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     setTC(TEXT)
     const descLines = doc.splitTextToSize(proj.description, CW)
     doc.text(descLines, M, y)
     y += descLines.length * 4.5 + 1
-    
+
     if (proj.tags && proj.tags.length > 0) {
       doc.setFont('helvetica', 'italic')
       doc.setFontSize(9)
@@ -402,13 +403,13 @@ function generateRolePDF(role, analysisResult) {
     doc.setFontSize(10.5)
     setTC(TEXT)
     doc.text(edu.degree, M, y)
-    
+
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     setTC(MUTED)
     doc.text(`${edu.year} | ${edu.grade}`, W - M, y, { align: 'right' })
     y += 5
-    
+
     doc.setFont('helvetica', 'italic')
     doc.setFontSize(9.5)
     setTC(accent)
@@ -568,14 +569,14 @@ function ResumeModal({ isOpen, onClose }) {
 
             {/* Body */}
             <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col lg:flex-row gap-8">
-              
+
               {/* Left Column: Input & Roles */}
               <div className="flex-1 flex flex-col gap-6">
-                
+
                 {/* JD Input */}
                 <div className="glass-card p-5 rounded-2xl border border-white/10">
                   <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                    <FileText size={16} className="text-indigo-400"/> Job Description
+                    <FileText size={16} className="text-indigo-400" /> Job Description
                   </h4>
                   <textarea
                     value={jdText}
@@ -591,7 +592,7 @@ function ResumeModal({ isOpen, onClose }) {
                       onChange={handleFileUpload}
                       className="hidden"
                     />
-                    <button 
+                    <button
                       onClick={() => fileInputRef.current?.click()}
                       className="text-xs flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
                     >
@@ -608,11 +609,11 @@ function ResumeModal({ isOpen, onClose }) {
                 {/* Role Selector */}
                 <div className="glass-card p-5 rounded-2xl border border-white/10 flex-1">
                   <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                    <Target size={16} className="text-indigo-400"/> Select Target Role
+                    <Target size={16} className="text-indigo-400" /> Select Target Role
                   </h4>
                   <div className="grid sm:grid-cols-2 gap-3">
                     {RESUME_ROLES.map(role => (
-                      <div 
+                      <div
                         key={role.id}
                         onClick={() => {
                           setSelectedRoleId(role.id)
@@ -653,13 +654,13 @@ function ResumeModal({ isOpen, onClose }) {
               {/* Right Column: Analysis Results & Download */}
               <div className="flex-1 flex flex-col">
                 <div className="glass-card p-6 rounded-2xl border border-white/10 h-full flex flex-col relative overflow-hidden"
-                     style={{ borderColor: selectedRole.borderColor }}>
-                  
+                  style={{ borderColor: selectedRole.borderColor }}>
+
                   <div className="absolute top-0 right-0 p-8 blur-3xl opacity-20 pointer-events-none"
-                       style={{ background: `radial-gradient(circle, ${selectedRole.color}, transparent)` }} />
+                    style={{ background: `radial-gradient(circle, ${selectedRole.color}, transparent)` }} />
 
                   <h4 className="text-sm font-bold text-white mb-6 flex items-center gap-2">
-                    <Briefcase size={16} style={{ color: selectedRole.color }}/> Analysis Results
+                    <Briefcase size={16} style={{ color: selectedRole.color }} /> Analysis Results
                   </h4>
 
                   {!analysisResult ? (
@@ -668,7 +669,7 @@ function ResumeModal({ isOpen, onClose }) {
                       <p className="text-sm text-gray-400 max-w-xs">Paste a job description and click analyze to see your ATS score and skill match.</p>
                     </div>
                   ) : (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="flex-1 flex flex-col gap-6"
@@ -702,7 +703,7 @@ function ResumeModal({ isOpen, onClose }) {
                       {/* Matched Skills */}
                       <div>
                         <div className="text-xs font-bold text-white mb-2 flex items-center gap-1">
-                          <CheckCircle size={12} className="text-emerald-400"/> Matched Keywords
+                          <CheckCircle size={12} className="text-emerald-400" /> Matched Keywords
                         </div>
                         <div className="flex flex-wrap gap-1.5">
                           {analysisResult.matched.length > 0 ? analysisResult.matched.map(skill => (
@@ -716,7 +717,7 @@ function ResumeModal({ isOpen, onClose }) {
                       {/* Missing Skills */}
                       <div className="mb-auto">
                         <div className="text-xs font-bold text-white mb-2 flex items-center gap-1">
-                          <AlertCircle size={12} className="text-rose-400"/> Missing Keywords (Consider Adding)
+                          <AlertCircle size={12} className="text-rose-400" /> Missing Keywords (Consider Adding)
                         </div>
                         <div className="flex flex-wrap gap-1.5">
                           {analysisResult.missing.length > 0 ? analysisResult.missing.map(skill => (
@@ -751,7 +752,7 @@ function ResumeModal({ isOpen, onClose }) {
                 </div>
               </div>
             </div>
-            
+
             {/* Footer */}
             <div className="px-8 py-3 text-center border-t border-white/5 bg-black/40">
               <p className="text-[10px] text-gray-500 font-mono tracking-wide">

@@ -211,14 +211,18 @@ function CertCard({ cert, index, inView }) {
           </div>
           <a
             href={cert.link}
-            className="flex items-center gap-1.5 text-xs font-bold transition-all duration-300 group-hover:-translate-y-0.5 uppercase tracking-wider px-3 py-1.5 rounded-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${cert.title} Certificate`}
+            className="flex items-center gap-2 text-[11px] font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg uppercase tracking-wider px-4 py-2 rounded-xl border"
             style={{ 
               color: cert.color, 
-              background: `${cert.color}10`,
-              textShadow: `0 0 10px ${cert.color}80` 
+              background: `linear-gradient(135deg, ${cert.color}15, ${cert.color}05)`,
+              borderColor: `${cert.color}40`,
+              textShadow: `0 0 10px ${cert.color}50` 
             }}
           >
-            View <ExternalLink size={12} />
+            View Certificate <ExternalLink size={14} />
           </a>
         </div>
       </div>
@@ -266,7 +270,7 @@ export default function Certifications() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-shadow-glow leading-tight">
-            Certifications & <span className="gradient-text">Learning</span>
+            Certifications & <span className="gradient-text">Professional Learning</span>
           </h2>
           
           <div className="w-24 h-1 mx-auto rounded-full mb-6" style={{ background: 'linear-gradient(90deg, #4ade80, #06b6d4, #3b82f6)' }} />

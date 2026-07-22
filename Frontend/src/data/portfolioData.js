@@ -227,41 +227,31 @@ export const portfolioData = {
       verified: true
     },
     {
-      title: 'Prompt Engineering & Programming with OpenAI',
-      issuer: 'OpenAI',
+      title: 'Programming with OpenAI',
+      issuer: 'Columbia University / OpenAI',
       date: 'Recent',
       credentialId: 'OAI-PE',
       link: '#',
       icon: '✨',
       color: '#ec4899',
-      skills: ['Prompt Engineering', 'LLMs', 'OpenAI API'],
+      skills: ['Prompt Engineering', 'LLMs', 'OpenAI APIs', 'AI Development'],
       verified: true
     },
+
     {
-      title: 'AI Tools Workshop Certification',
-      issuer: 'Workshop',
-      date: 'Recent',
-      credentialId: 'AI-TOOLS',
-      link: '#',
-      icon: '🛠️',
-      color: '#8b5cf6',
-      skills: ['AI Tools', 'ChatGPT', 'Productivity'],
-      verified: true
-    },
-    {
-      title: 'Cambridge Linguaskill English Certification B1',
-      issuer: 'Cambridge',
+      title: 'Cambridge Linguaskill',
+      issuer: 'Cambridge University',
       date: 'Recent',
       credentialId: 'CAM-ENG',
       link: '#',
       icon: '🗣️',
       color: '#ef4444',
-      skills: ['English', 'Communication'],
+      skills: ['Professional English', 'Communication'],
       verified: true
     },
     {
       title: 'Web Development Bootcamp',
-      issuer: 'Bootcamp',
+      issuer: 'KLH University',
       date: 'Recent',
       credentialId: 'WEB-DEV',
       link: '#',
