@@ -339,47 +339,83 @@ export default function Hero() {
             className="hidden lg:flex relative w-full h-[500px] items-center justify-center perspective-1000"
           >
             {/* Animated Orbiting Badges */}
-            <OrbitingBadge label="Python" angle={0} radius={220} duration={25} color="#3b82f6" />
-            <OrbitingBadge label="React" angle={45} radius={200} duration={20} color="#06b6d4" />
-            <OrbitingBadge label="AI/ML" angle={90} radius={240} duration={30} color="#8b5cf6" />
-            <OrbitingBadge label="LLMs" angle={135} radius={190} duration={22} color="#ec4899" />
-            <OrbitingBadge label="RAG" angle={180} radius={230} duration={28} color="#f59e0b" />
-            <OrbitingBadge label="n8n" angle={225} radius={210} duration={24} color="#ea580c" />
-            <OrbitingBadge label="Automation" angle={270} radius={250} duration={35} color="#10b981" />
-            <OrbitingBadge label="Node.js" angle={315} radius={180} duration={18} color="#22c55e" />
+            <OrbitingBadge label="Python" angle={0} radius={260} duration={25} color="#3b82f6" />
+            <OrbitingBadge label="React" angle={40} radius={240} duration={20} color="#06b6d4" />
+            <OrbitingBadge label="AI" angle={80} radius={280} duration={30} color="#8b5cf6" />
+            <OrbitingBadge label="LLMs" angle={120} radius={230} duration={22} color="#ec4899" />
+            <OrbitingBadge label="RAG" angle={160} radius={270} duration={28} color="#f59e0b" />
+            <OrbitingBadge label="n8n" angle={200} radius={250} duration={24} color="#ea580c" />
+            <OrbitingBadge label="Automation Anywhere" angle={240} radius={290} duration={35} color="#10b981" />
+            <OrbitingBadge label="Node.js" angle={280} radius={220} duration={18} color="#22c55e" />
+            <OrbitingBadge label="GitHub" angle={320} radius={260} duration={26} color="#ffffff" />
 
-            {/* 3D Profile Frame */}
+            {/* Cinematic Video Showcase */}
             <motion.div 
               style={{ rotateX: rotX, rotateY: rotY, transformStyle: 'preserve-3d' }}
-              className="relative w-80 h-80 rounded-full flex items-center justify-center"
+              className="relative w-[320px] h-[400px] flex items-center justify-center transition-transform duration-500 ease-out hover:scale-105 group"
             >
-              {/* Glowing rings */}
-              <div className="absolute inset-[-20px] rounded-full border border-indigo-500/30 shadow-[0_0_40px_rgba(99,102,241,0.2)] animate-spin-slow" style={{ animationDuration: '15s' }} />
-              <div className="absolute inset-[-40px] rounded-full border border-dashed border-cyan-500/30 animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '25s' }} />
-              
-              {/* Image container */}
+              {/* Soft purple glow behind */}
               <div 
-                className="relative w-full h-full rounded-full overflow-hidden border-2 border-indigo-500/50 glass-card"
-                style={{ transform: 'translateZ(20px)', boxShadow: '0 0 30px rgba(99,102,241,0.4), inset 0 0 20px rgba(0,0,0,0.8)' }}
+                className="absolute inset-0 rounded-[2rem] bg-purple-600/20 blur-[60px] group-hover:bg-purple-500/40 group-hover:blur-[80px] transition-all duration-700 pointer-events-none" 
+                style={{ transform: 'translateZ(-50px)' }} 
+              />
+
+              {/* Animated neon border */}
+              <div 
+                className="absolute inset-[-3px] rounded-[2.2rem] bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 opacity-40 group-hover:opacity-100 animate-pulse transition-opacity duration-500"
+                style={{ transform: 'translateZ(-10px)' }}
+              />
+              
+              {/* Glassmorphism Video Wrapper */}
+              <div 
+                className="relative w-full h-full rounded-[2rem] overflow-hidden glass-card border border-white/10 z-10 cursor-pointer"
+                style={{ transform: 'translateZ(20px)', boxShadow: '0 20px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(139,92,246,0.3)' }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent z-10 opacity-60" />
-                <img 
-                  src={heroImg} 
-                  alt="Jeevan Bodlapati - AI Software Engineer"
-                  fetchpriority="high"
-                  className="w-full h-full object-cover object-top opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
-                  style={{ filter: 'contrast(1.1) brightness(1.1)' }}
-                  onError={(e) => {
-                    // Fallback to a futuristic abstract avatar if image not found
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-                {/* Fallback avatar */}
-                <div className="hidden absolute inset-0 bg-dark-800 items-center justify-center flex-col gap-2">
-                  <Terminal size={48} className="text-indigo-400 opacity-50" />
-                  <span className="text-xs font-mono text-indigo-400/50">SYSTEM.USER</span>
+                {/* Overlay shadow for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-transparent to-dark-900/60 z-20 pointer-events-none transition-opacity duration-500 group-hover:opacity-60" />
+
+                {/* The Video Element */}
+                <video 
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  loading="lazy"
+                  poster={heroImg}
+                  className="w-full h-full object-cover opacity-75 mix-blend-luminosity group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100"
+                >
+                  <source src="https://cdn.pixabay.com/video/2020/07/23/45495-442436214_large.mp4" type="video/mp4" />
+                </video>
+                
+                {/* Top Left: LIVE DEMO */}
+                <div className="absolute top-5 left-5 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-900/60 backdrop-blur-md border border-white/10">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                  <span className="text-[10px] font-bold tracking-widest text-white">LIVE DEMO</span>
                 </div>
+
+                {/* Top Right: Animated Equalizer */}
+                <div className="absolute top-6 right-6 z-30 flex items-end gap-1 h-3 opacity-80">
+                  <div className="w-1 bg-purple-400 rounded-t-sm animate-pulse" style={{ height: '60%', animationDuration: '0.5s' }} />
+                  <div className="w-1 bg-purple-400 rounded-t-sm animate-pulse" style={{ height: '100%', animationDuration: '0.7s', animationDelay: '0.2s' }} />
+                  <div className="w-1 bg-purple-400 rounded-t-sm animate-pulse" style={{ height: '40%', animationDuration: '0.6s', animationDelay: '0.4s' }} />
+                  <div className="w-1 bg-purple-400 rounded-t-sm animate-pulse" style={{ height: '80%', animationDuration: '0.8s', animationDelay: '0.1s' }} />
+                </div>
+
+                {/* Bottom Left: AI Software Engineer */}
+                <div className="absolute bottom-5 left-5 z-30">
+                  <div className="px-3 py-1.5 rounded-lg bg-purple-900/40 backdrop-blur-md border border-purple-500/30">
+                    <span className="text-[11px] font-mono tracking-wider text-purple-200 uppercase">AI Software Engineer</span>
+                  </div>
+                </div>
+
+                {/* Bottom Right: Watch Portfolio */}
+                <div className="absolute bottom-5 right-5 z-30 flex flex-col items-center gap-2">
+                  <span className="text-[9px] font-bold tracking-widest text-white/0 group-hover:text-white/100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">WATCH PORTFOLIO</span>
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-purple-500/80 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.6)] transition-all duration-300">
+                    <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" />
+                  </div>
+                </div>
+
               </div>
             </motion.div>
           </motion.div>
